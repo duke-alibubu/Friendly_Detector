@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.example.friendlydetector.R;
 
@@ -23,10 +25,10 @@ import com.android.example.friendlydetector.R;
  */
 public class MainMenuLoggedIn extends Fragment {
 
+    private Button translateButton;
     private MainMenuLoggedIn() {
         // Required empty public constructor
     }
-    // TODO: Rename and change types and number of parameters
     public static MainMenuLoggedIn newInstance() {
         MainMenuLoggedIn fragment = new MainMenuLoggedIn();
         return fragment;
@@ -41,7 +43,20 @@ public class MainMenuLoggedIn extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_menu_logged_in, container, false);
+        View view = inflater.inflate(R.layout.fragment_main_menu_logged_in, container, false);
+        translateButton = view.findViewById(R.id.trans);
+
+        translateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment translateFragment = TranslateFragment.newInstance();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, translateFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        return view;
     }
 
 

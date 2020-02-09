@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import com.android.example.friendlydetector.fragments.MainMenuLoggedIn;
 
