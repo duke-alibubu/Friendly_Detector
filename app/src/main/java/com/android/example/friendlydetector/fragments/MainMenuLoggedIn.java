@@ -26,6 +26,10 @@ import com.android.example.friendlydetector.R;
 public class MainMenuLoggedIn extends Fragment {
 
     private Button translateButton;
+    private Button imgToTextButton;
+    private Button matching;
+    private Button viewBmks;
+
     private MainMenuLoggedIn() {
         // Required empty public constructor
     }
@@ -45,6 +49,9 @@ public class MainMenuLoggedIn extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_menu_logged_in, container, false);
         translateButton = view.findViewById(R.id.trans);
+        imgToTextButton = view.findViewById(R.id.img_to_text);
+        matching = view.findViewById(R.id.matching);
+        viewBmks = view.findViewById(R.id.view_bmks);
 
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +63,40 @@ public class MainMenuLoggedIn extends Fragment {
                 transaction.commit();
             }
         });
+
+        imgToTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment imgtoTextFragment = ImgToTextFragment.newInstance();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, imgtoTextFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        viewBmks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment viewBookmarksFragment = ViewBookmarksFragment.newInstance();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, viewBookmarksFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        matching.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment matchingGameFragment = MatchingGameFragment.newInstance();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.container, matchingGameFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
         return view;
     }
 

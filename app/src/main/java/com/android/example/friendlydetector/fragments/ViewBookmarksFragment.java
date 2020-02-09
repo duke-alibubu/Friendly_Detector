@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import com.android.example.friendlydetector.R;
 
 
-public class TranslateFragment extends Fragment {
-    private TranslateFragment() {
+public class ViewBookmarksFragment extends Fragment {
+    private ViewBookmarksFragment() {
 
     }
 
-    public static TranslateFragment newInstance() {
-        TranslateFragment fragment = new TranslateFragment();
+    public static ViewBookmarksFragment newInstance() {
+        ViewBookmarksFragment fragment = new ViewBookmarksFragment();
 
         return fragment;
     }
@@ -32,7 +32,7 @@ public class TranslateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_translate, container, false);
+        return inflater.inflate(R.layout.fragment_view_bookmarks, container, false);
     }
 
 
