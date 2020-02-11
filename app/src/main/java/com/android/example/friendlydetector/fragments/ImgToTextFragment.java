@@ -29,6 +29,8 @@ import static android.app.Activity.RESULT_OK;
 public class ImgToTextFragment extends Fragment {
     private Button loadButton;
     private ImageView image;
+
+    private static final int LOAD_IMAGE_REQUEST_CODE = 322;
     private ImgToTextFragment() {
 
     }
@@ -58,7 +60,7 @@ public class ImgToTextFragment extends Fragment {
                 Intent loadIntent = new Intent(
                         Intent.ACTION_PICK);
                 loadIntent.setType("image/*");
-                startActivityForResult(loadIntent, 1);
+                startActivityForResult(loadIntent, LOAD_IMAGE_REQUEST_CODE);
             }
         });
 
@@ -69,7 +71,7 @@ public class ImgToTextFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
+        if (requestCode == LOAD_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
             try {
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContext().getContentResolver().openInputStream(imageUri);
