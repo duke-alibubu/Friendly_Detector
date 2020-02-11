@@ -1,23 +1,31 @@
-package com.android.example.friendlydetector;
+package com.android.example.friendlydetector.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.fragments.MainMenuLoggedIn;
-import com.android.example.friendlydetector.fragments.MatchingGameFragment;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private Button mainmenuButton;
+    private Button signoutButton;
     private Fragment mainmenuFragment;
     private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.container, mainmenuFragment).commit();
-
 
         mainmenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +48,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        // Sign Out button
+        signoutButton = findViewById(R.id.signout_button);
+        signoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+            }
+        });
     }
 
+    public void signOut() {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    public void onComplete(@NonNull Task<Void> task) {
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+    }
 }

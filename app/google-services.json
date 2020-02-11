@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "685885357294",
+    "firebase_url": "https://friendly-detector.firebaseio.com",
+    "project_id": "friendly-detector",
+    "storage_bucket": "friendly-detector.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685885357294:android:54dc625f1c9420786647ff",
+        "android_client_info": {
+          "package_name": "com.android.example.friendlydetector"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685885357294-jmj8e1svcse761vue1d47fgc1dotoue5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.example.friendlydetector",
+            "certificate_hash": "e45c7d6c04a2b8f6ebd54c5c2f2d240ef1132ec4"
+          }
+        },
+        {
+          "client_id": "685885357294-ptaa1fihv53utsaog88616jbv3vionla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA34eNM-jJ5ztX3V7Lg8Y4ZnWUY6Tk1m68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685885357294-ptaa1fihv53utsaog88616jbv3vionla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
