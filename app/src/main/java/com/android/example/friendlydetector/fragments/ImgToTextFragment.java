@@ -28,9 +28,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class ImgToTextFragment extends Fragment {
     private Button loadButton;
+    private Button cameraButton;
     private ImageView image;
 
     private static final int LOAD_IMAGE_REQUEST_CODE = 322;
+    private static final int CAMERA_REQUEST_CODE = 69;
     private ImgToTextFragment() {
 
     }
@@ -52,45 +54,79 @@ public class ImgToTextFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_img_to_text, container, false);
         loadButton = view.findViewById(R.id.load);
+        cameraButton = view.findViewById(R.id.camera);
+
         image = view.findViewById(R.id.image_holder);
 
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loadIntent = new Intent(
-                        Intent.ACTION_PICK);
-                loadIntent.setType("image/*");
-                startActivityForResult(loadIntent, LOAD_IMAGE_REQUEST_CODE);
+                loadImage();
+            }
+        });
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takePicture();
             }
         });
 
         return view;
     }
 
+    private void loadImage(){
+        Intent loadIntent = new Intent(
+                Intent.ACTION_PICK);
+        loadIntent.setType("image/*");
+        startActivityForResult(loadIntent, LOAD_IMAGE_REQUEST_CODE);
+    }
+    private void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == LOAD_IMAGE_REQUEST_CODE && resultCode == RESULT_OK && null != data) {
-            try {
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContext().getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+        if (resultCode == RESULT_OK && null != data) {
+            if (requestCode == LOAD_IMAGE_REQUEST_CODE){
+                try {
+                    final Uri imageUri = data.getData();
+                    final InputStream imageStream = getContext().getContentResolver().openInputStream(imageUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                //get screen width
-                DisplayMetrics displayMetrics = new DisplayMetrics();
-                getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                int screenWidth = displayMetrics.widthPixels;
+                    image.setImageBitmap(scaleBitmapToScreenSize(selectedImage));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            else if (requestCode == CAMERA_REQUEST_CODE){
+                try {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageTaken = (Bitmap) extras.get("data");
 
-                //scale the image size down
-                int height = screenWidth * selectedImage.getHeight() / selectedImage.getWidth();
-                Bitmap scaledImage = Bitmap.createScaledBitmap(selectedImage, screenWidth, height, true);
-
-                image.setImageBitmap(scaledImage);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                    image.setImageBitmap(scaleBitmapToScreenSize(imageTaken));
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
+    }
+
+    private Bitmap scaleBitmapToScreenSize(Bitmap input){
+        //get screen width
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+
+        //scale the image size down
+        int height = screenWidth * input.getHeight() / input.getWidth();
+        return Bitmap.createScaledBitmap(input, screenWidth, height, true);
     }
 
     @Override
