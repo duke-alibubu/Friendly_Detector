@@ -103,4 +103,9 @@ public class SignInActivity extends AppCompatActivity {
                         .build(),
                 RC_SIGN_IN);
     }
+
+    public static boolean isSignedIn() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return user.getDisplayName() != null;
+    }
 }

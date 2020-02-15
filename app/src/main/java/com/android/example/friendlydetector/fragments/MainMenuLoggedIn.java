@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.example.friendlydetector.R;
+import com.android.example.friendlydetector.activities.SignInActivity;
 
 
 /**
@@ -52,6 +53,11 @@ public class MainMenuLoggedIn extends Fragment {
         imgToTextButton = view.findViewById(R.id.img_to_text);
         matching = view.findViewById(R.id.matching);
         viewBmks = view.findViewById(R.id.view_bmks);
+
+        if (!SignInActivity.isSignedIn()){
+            matching.setVisibility(View.GONE);
+            viewBmks.setVisibility(View.GONE);
+        }
 
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override

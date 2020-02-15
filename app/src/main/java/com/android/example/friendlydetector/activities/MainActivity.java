@@ -22,7 +22,7 @@ import com.google.android.gms.tasks.Task;
 public class MainActivity extends AppCompatActivity {
 
     private Button mainmenuButton;
-    private Button signoutButton;
+    private Button signButton;
     private Fragment mainmenuFragment;
     private FragmentManager fragmentManager;
 
@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Sign Out button
-        signoutButton = findViewById(R.id.signout_button);
-        signoutButton.setOnClickListener(new View.OnClickListener() {
+        signButton = findViewById(R.id.sign_button);
+        signButton.setText((SignInActivity.isSignedIn()) ? R.string.signout : R.string.signin);
+        signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signOut();
@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void signOut() {
+
+    private void signOut() {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
