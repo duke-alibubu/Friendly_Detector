@@ -2,6 +2,7 @@
     <string name="app_name">Friendly Detector</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="signout">Sign Out</string>
+    <string name="signin">Sign In</string>
     <string name="log_out">Log Out</string>
     <string name="main_menu">Main Menu</string>
     <string name="img_to_text">Image to Text</string>
