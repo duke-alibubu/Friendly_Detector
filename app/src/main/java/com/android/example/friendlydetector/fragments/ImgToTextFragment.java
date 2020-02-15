@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -154,7 +155,7 @@ public class ImgToTextFragment extends Fragment {
 //
 //                    image.setImageBitmap(imageTaken);
                     //galleryAddPic();
-                    image.setImageBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles()));
+                    image.setImageBitmap(rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles())));
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -169,11 +170,9 @@ public class ImgToTextFragment extends Fragment {
 //                    image.setImageBitmap(imageTaken);
                 galleryAddPic();
                 image.setImageBitmap(loadScaledPicFromInternalFiles());
-                Log.d("Test", "Con cac");
             }
             catch (Exception e){
                 e.printStackTrace();
-                Log.e("Test", "Con cac");
             }
         }
     }
@@ -186,9 +185,15 @@ public class ImgToTextFragment extends Fragment {
 
         //scale the image size down
         int height = screenWidth * input.getHeight() / input.getWidth();
-        return Bitmap.createScaledBitmap(input, screenWidth, height, false);
+        return Bitmap.createScaledBitmap(input, screenWidth, height, true);
     }
 
+    private Bitmap rotateBitmap(Bitmap input){
+        Matrix matrix = new Matrix();
+
+        matrix.postRotate(90);
+        return Bitmap.createBitmap(input, 0, 0, input.getWidth(), input.getHeight(), matrix, true);
+    }
     private Bitmap loadScaledPicFromInternalFiles() {
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
