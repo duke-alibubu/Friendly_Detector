@@ -8,20 +8,28 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.example.friendlydetector.R;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -31,6 +39,7 @@ public class ImgToTextFragment extends Fragment {
     private Button cameraButton;
     private ImageView image;
 
+    private String currentPhotoPath;
     private static final int LOAD_IMAGE_REQUEST_CODE = 322;
     private static final int CAMERA_REQUEST_CODE = 69;
     private ImgToTextFragment() {
@@ -83,17 +92,51 @@ public class ImgToTextFragment extends Fragment {
     }
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                ex.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getContext(),
+                        "com.android.example.friendlydetector.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+                //galleryAddPic();
+            }
         }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && null != data) {
-            if (requestCode == LOAD_IMAGE_REQUEST_CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == LOAD_IMAGE_REQUEST_CODE && null != data){
                 try {
                     final Uri imageUri = data.getData();
                     final InputStream imageStream = getContext().getContentResolver().openInputStream(imageUri);
@@ -106,14 +149,31 @@ public class ImgToTextFragment extends Fragment {
             }
             else if (requestCode == CAMERA_REQUEST_CODE){
                 try {
-                    Bundle extras = data.getExtras();
-                    Bitmap imageTaken = (Bitmap) extras.get("data");
-
-                    image.setImageBitmap(scaleBitmapToScreenSize(imageTaken));
+//                    Bundle extras = data.getExtras();
+//                    Bitmap imageTaken = (Bitmap) extras.get("data");
+//
+//                    image.setImageBitmap(imageTaken);
+                    //galleryAddPic();
+                    image.setImageBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles()));
                 }
                 catch (Exception e){
                     e.printStackTrace();
                 }
+            }
+        }
+        else if (requestCode == CAMERA_REQUEST_CODE){
+            try {
+//                    Bundle extras = data.getExtras();
+//                    Bitmap imageTaken = (Bitmap) extras.get("data");
+//
+//                    image.setImageBitmap(imageTaken);
+                galleryAddPic();
+                image.setImageBitmap(loadScaledPicFromInternalFiles());
+                Log.d("Test", "Con cac");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Log.e("Test", "Con cac");
             }
         }
     }
@@ -126,7 +186,29 @@ public class ImgToTextFragment extends Fragment {
 
         //scale the image size down
         int height = screenWidth * input.getHeight() / input.getWidth();
-        return Bitmap.createScaledBitmap(input, screenWidth, height, true);
+        return Bitmap.createScaledBitmap(input, screenWidth, height, false);
+    }
+
+    private Bitmap loadScaledPicFromInternalFiles() {
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = 1;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
+        return bitmap;
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(currentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getActivity().sendBroadcast(mediaScanIntent);
     }
 
     @Override
