@@ -61,10 +61,7 @@ public class ImgToTextFragment extends Fragment {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent loadIntent = new Intent(
-                        Intent.ACTION_PICK);
-                loadIntent.setType("image/*");
-                startActivityForResult(loadIntent, LOAD_IMAGE_REQUEST_CODE);
+                loadImage();
             }
         });
 
@@ -78,6 +75,12 @@ public class ImgToTextFragment extends Fragment {
         return view;
     }
 
+    private void loadImage(){
+        Intent loadIntent = new Intent(
+                Intent.ACTION_PICK);
+        loadIntent.setType("image/*");
+        startActivityForResult(loadIntent, LOAD_IMAGE_REQUEST_CODE);
+    }
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
@@ -102,10 +105,15 @@ public class ImgToTextFragment extends Fragment {
                 }
             }
             else if (requestCode == CAMERA_REQUEST_CODE){
-                Bundle extras = data.getExtras();
-                Bitmap imageTaken = (Bitmap) extras.get("data");
+                try {
+                    Bundle extras = data.getExtras();
+                    Bitmap imageTaken = (Bitmap) extras.get("data");
 
-                image.setImageBitmap(scaleBitmapToScreenSize(imageTaken));
+                    image.setImageBitmap(scaleBitmapToScreenSize(imageTaken));
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
     }
