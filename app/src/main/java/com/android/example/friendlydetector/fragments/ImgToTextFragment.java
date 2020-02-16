@@ -65,7 +65,8 @@ public class ImgToTextFragment extends Fragment {
     private Button cameraButton;
     private ImageView image;
 
-    private static String visionResult;
+    private static Bitmap passedImage;
+    private static MainActivity mainActivityContext;
     private String currentPhotoPath;
     private static final int LOAD_IMAGE_REQUEST_CODE = 322;
     private static final int CAMERA_REQUEST_CODE = 69;
@@ -74,7 +75,6 @@ public class ImgToTextFragment extends Fragment {
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
-    private static final int MAX_DIMENSION = 1200;
     private static final String TAG = "Vision_api";
 
     private ImgToTextFragment() {
@@ -179,9 +179,9 @@ public class ImgToTextFragment extends Fragment {
 
                     Bitmap output = scaleBitmapToScreenSize(selectedImage);
                     image.setImageBitmap(output);
+                    passedImage = output;
+                    mainActivityContext = (MainActivity)getActivity();
                     callCloudVision(output);
-                    MainActivity activity = (MainActivity) getActivity();
-                    activity.createVisionResultFragment(output, visionResult);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -196,9 +196,9 @@ public class ImgToTextFragment extends Fragment {
 
                     Bitmap output = rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles()));
                     image.setImageBitmap(output);
+                    passedImage = output;
+                    mainActivityContext = (MainActivity)getActivity();
                     callCloudVision(output);
-                    MainActivity activity = (MainActivity) getActivity();
-                    activity.createVisionResultFragment(output, visionResult);
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -357,7 +357,7 @@ public class ImgToTextFragment extends Fragment {
 //                TextView imageDetail = activity.findViewById(R.id.image_details);
 //                imageDetail.setText(result);
                 Log.d(TAG, result);
-                visionResult = result;
+                mainActivityContext.createVisionResultFragment(passedImage, result);
             }
         }
     }
