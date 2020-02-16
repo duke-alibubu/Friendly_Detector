@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.android.example.friendlydetector.BuildConfig;
 import com.android.example.friendlydetector.R;
+import com.android.example.friendlydetector.activities.MainActivity;
 import com.android.example.friendlydetector.utils.PackageManagerUtils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -64,6 +65,8 @@ public class ImgToTextFragment extends Fragment {
     private Button cameraButton;
     private ImageView image;
 
+    private static Bitmap passedImage;
+    private static MainActivity mainActivityContext;
     private String currentPhotoPath;
     private static final int LOAD_IMAGE_REQUEST_CODE = 322;
     private static final int CAMERA_REQUEST_CODE = 69;
@@ -72,7 +75,6 @@ public class ImgToTextFragment extends Fragment {
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
-    private static final int MAX_DIMENSION = 1200;
     private static final String TAG = "Vision_api";
 
     private ImgToTextFragment() {
@@ -175,8 +177,11 @@ public class ImgToTextFragment extends Fragment {
                     final InputStream imageStream = getContext().getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    image.setImageBitmap(scaleBitmapToScreenSize(selectedImage));
-                    callCloudVision(scaleBitmapToScreenSize(selectedImage));
+                    Bitmap output = scaleBitmapToScreenSize(selectedImage);
+                    image.setImageBitmap(output);
+                    passedImage = output;
+                    mainActivityContext = (MainActivity)getActivity();
+                    callCloudVision(output);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -188,27 +193,31 @@ public class ImgToTextFragment extends Fragment {
 //
 //                    image.setImageBitmap(imageTaken);
                     //galleryAddPic();
-                    image.setImageBitmap(rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles())));
-                    callCloudVision(rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles())));
+
+                    Bitmap output = rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles()));
+                    image.setImageBitmap(output);
+                    passedImage = output;
+                    mainActivityContext = (MainActivity)getActivity();
+                    callCloudVision(output);
                 }
                 catch (Exception e){
                     e.printStackTrace();
                 }
             }
         }
-        else if (requestCode == CAMERA_REQUEST_CODE){
-            try {
-//                    Bundle extras = data.getExtras();
-//                    Bitmap imageTaken = (Bitmap) extras.get("data");
-//
-//                    image.setImageBitmap(imageTaken);
-                galleryAddPic();
-                image.setImageBitmap(loadScaledPicFromInternalFiles());
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+//        else if (requestCode == CAMERA_REQUEST_CODE){
+//            try {
+////                    Bundle extras = data.getExtras();
+////                    Bitmap imageTaken = (Bitmap) extras.get("data");
+////
+////                    image.setImageBitmap(imageTaken);
+//                galleryAddPic();
+//                image.setImageBitmap(loadScaledPicFromInternalFiles());
+//            }
+//            catch (Exception e){
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     private Bitmap scaleBitmapToScreenSize(Bitmap input){
@@ -348,6 +357,7 @@ public class ImgToTextFragment extends Fragment {
 //                TextView imageDetail = activity.findViewById(R.id.image_details);
 //                imageDetail.setText(result);
                 Log.d(TAG, result);
+                mainActivityContext.createVisionResultFragment(passedImage, result);
             }
         }
     }

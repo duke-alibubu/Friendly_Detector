@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.fragments.MainMenuLoggedIn;
+import com.android.example.friendlydetector.fragments.VisionResultFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -73,5 +75,13 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+    public void createVisionResultFragment(Bitmap bmp, String res){
+        VisionResultFragment visionResultFragment = VisionResultFragment.newInstance(bmp, res);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.container, visionResultFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
