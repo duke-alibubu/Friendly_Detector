@@ -63,7 +63,6 @@ import static android.app.Activity.RESULT_OK;
 public class ImgToTextFragment extends Fragment {
     private Button loadButton;
     private Button cameraButton;
-    private ImageView image;
 
     private static Bitmap passedImage;
     private static MainActivity mainActivityContext;
@@ -99,8 +98,6 @@ public class ImgToTextFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_img_to_text, container, false);
         loadButton = view.findViewById(R.id.load);
         cameraButton = view.findViewById(R.id.camera);
-
-        image = view.findViewById(R.id.image_holder);
 
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +175,6 @@ public class ImgToTextFragment extends Fragment {
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
                     Bitmap output = scaleBitmapToScreenSize(selectedImage);
-                    image.setImageBitmap(output);
                     passedImage = output;
                     mainActivityContext = (MainActivity)getActivity();
                     callCloudVision(output);
@@ -188,14 +184,7 @@ public class ImgToTextFragment extends Fragment {
             }
             else if (requestCode == CAMERA_REQUEST_CODE){
                 try {
-//                    Bundle extras = data.getExtras();
-//                    Bitmap imageTaken = (Bitmap) extras.get("data");
-//
-//                    image.setImageBitmap(imageTaken);
-                    //galleryAddPic();
-
                     Bitmap output = rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles()));
-                    image.setImageBitmap(output);
                     passedImage = output;
                     mainActivityContext = (MainActivity)getActivity();
                     callCloudVision(output);
@@ -205,19 +194,6 @@ public class ImgToTextFragment extends Fragment {
                 }
             }
         }
-//        else if (requestCode == CAMERA_REQUEST_CODE){
-//            try {
-////                    Bundle extras = data.getExtras();
-////                    Bitmap imageTaken = (Bitmap) extras.get("data");
-////
-////                    image.setImageBitmap(imageTaken);
-//                galleryAddPic();
-//                image.setImageBitmap(loadScaledPicFromInternalFiles());
-//            }
-//            catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     private Bitmap scaleBitmapToScreenSize(Bitmap input){
@@ -249,14 +225,6 @@ public class ImgToTextFragment extends Fragment {
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         return bitmap;
-    }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        getActivity().sendBroadcast(mediaScanIntent);
     }
 
     private Vision.Images.Annotate prepareAnnotationRequest(final Bitmap bitmap) throws IOException {
