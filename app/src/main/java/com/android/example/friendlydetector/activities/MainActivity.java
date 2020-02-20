@@ -20,11 +20,12 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mainmenuButton;
-    private Button signButton;
+    private BottomNavigationItemView mainmenuButton;
+    private BottomNavigationItemView signButton;
     private Fragment mainmenuFragment;
     private FragmentManager fragmentManager;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mainmenuFragment = MainMenuLoggedIn.newInstance();
-        mainmenuButton = findViewById(R.id.main_button);
+        mainmenuButton = findViewById(R.id.nav_home);
 
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.container, mainmenuFragment).commit();
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        signButton = findViewById(R.id.sign_button);
-        signButton.setText((SignInActivity.isSignedIn()) ? R.string.signout : R.string.signin);
+        signButton = findViewById(R.id.nav_log);
+        signButton.setTitle(getText((SignInActivity.isSignedIn()) ? R.string.signout : R.string.signin));
         signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
