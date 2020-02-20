@@ -39,22 +39,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Translate"
-        app:layout_constraintBottom_toTopOf="@+id/translated_result"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/speak"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/result" />
 
-    <TextView
-        android:id="@+id/translated_result"
+    <Button
+        android:id="@+id/speak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Con Cac"
+        android:text="Speak"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/translate" />
+        app:layout_constraintStart_toEndOf="@+id/translate"
+        app:layout_constraintTop_toBottomOf="@+id/result" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
