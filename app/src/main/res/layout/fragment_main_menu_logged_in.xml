@@ -10,7 +10,7 @@
     <Button
         android:id="@+id/img_to_text"
         style="@style/button_style"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_image_black_24dp"
         android:text="@string/img_to_text"
@@ -22,7 +22,7 @@
 
     <Button
         android:id="@+id/trans"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/translate"
         app:layout_constraintBottom_toTopOf="@+id/view_bmks"
@@ -35,7 +35,7 @@
 
     <Button
         android:id="@+id/view_bmks"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/view_bookmark"
         app:layout_constraintBottom_toTopOf="@+id/matching"
@@ -48,7 +48,7 @@
 
     <Button
         android:id="@+id/matching"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/matching_game"
         app:layout_constraintBottom_toBottomOf="parent"
