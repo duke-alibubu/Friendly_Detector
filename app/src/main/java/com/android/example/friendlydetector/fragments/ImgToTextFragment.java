@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.android.example.friendlydetector.BuildConfig;
 import com.android.example.friendlydetector.R;
+import com.android.example.friendlydetector.activities.MainActivity;
 import com.android.example.friendlydetector.utils.PackageManagerUtils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -62,8 +63,9 @@ import static android.app.Activity.RESULT_OK;
 public class ImgToTextFragment extends Fragment {
     private Button loadButton;
     private Button cameraButton;
-    private ImageView image;
 
+    private static Bitmap passedImage;
+    private static MainActivity mainActivityContext;
     private String currentPhotoPath;
     private static final int LOAD_IMAGE_REQUEST_CODE = 322;
     private static final int CAMERA_REQUEST_CODE = 69;
@@ -72,7 +74,6 @@ public class ImgToTextFragment extends Fragment {
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
-    private static final int MAX_DIMENSION = 1200;
     private static final String TAG = "Vision_api";
 
     private ImgToTextFragment() {
@@ -97,8 +98,6 @@ public class ImgToTextFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_img_to_text, container, false);
         loadButton = view.findViewById(R.id.load);
         cameraButton = view.findViewById(R.id.camera);
-
-        image = view.findViewById(R.id.image_holder);
 
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,38 +174,24 @@ public class ImgToTextFragment extends Fragment {
                     final InputStream imageStream = getContext().getContentResolver().openInputStream(imageUri);
                     final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                    image.setImageBitmap(scaleBitmapToScreenSize(selectedImage));
-                    callCloudVision(scaleBitmapToScreenSize(selectedImage));
+                    Bitmap output = scaleBitmapToScreenSize(selectedImage);
+                    passedImage = output;
+                    mainActivityContext = (MainActivity)getActivity();
+                    callCloudVision(output);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
             else if (requestCode == CAMERA_REQUEST_CODE){
                 try {
-//                    Bundle extras = data.getExtras();
-//                    Bitmap imageTaken = (Bitmap) extras.get("data");
-//
-//                    image.setImageBitmap(imageTaken);
-                    //galleryAddPic();
-                    image.setImageBitmap(rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles())));
-                    callCloudVision(rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles())));
+                    Bitmap output = rotateBitmap(scaleBitmapToScreenSize(loadScaledPicFromInternalFiles()));
+                    passedImage = output;
+                    mainActivityContext = (MainActivity)getActivity();
+                    callCloudVision(output);
                 }
                 catch (Exception e){
                     e.printStackTrace();
                 }
-            }
-        }
-        else if (requestCode == CAMERA_REQUEST_CODE){
-            try {
-//                    Bundle extras = data.getExtras();
-//                    Bitmap imageTaken = (Bitmap) extras.get("data");
-//
-//                    image.setImageBitmap(imageTaken);
-                galleryAddPic();
-                image.setImageBitmap(loadScaledPicFromInternalFiles());
-            }
-            catch (Exception e){
-                e.printStackTrace();
             }
         }
     }
@@ -240,14 +225,6 @@ public class ImgToTextFragment extends Fragment {
 
         Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions);
         return bitmap;
-    }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        getActivity().sendBroadcast(mediaScanIntent);
     }
 
     private Vision.Images.Annotate prepareAnnotationRequest(final Bitmap bitmap) throws IOException {
@@ -348,6 +325,7 @@ public class ImgToTextFragment extends Fragment {
 //                TextView imageDetail = activity.findViewById(R.id.image_details);
 //                imageDetail.setText(result);
                 Log.d(TAG, result);
+                mainActivityContext.createVisionResultFragment(passedImage, result);
             }
         }
     }
