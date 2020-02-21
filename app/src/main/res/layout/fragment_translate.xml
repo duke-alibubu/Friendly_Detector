@@ -35,7 +35,8 @@
         android:layout_margin="20dp"
         android:text="@string/translate"
         app:layout_constraintTop_toBottomOf="@+id/source_text"
-        tools:layout_editor_absoluteX="20dp" />
+        tools:layout_editor_absoluteX="20dp"
+        style="@style/button_style"/>
 
     <TextView
         android:id="@+id/translated_lang"

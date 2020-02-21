@@ -43,7 +43,9 @@
         app:layout_constraintEnd_toStartOf="@+id/speak"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result" />
+        app:layout_constraintTop_toBottomOf="@+id/result"
+        android:drawableLeft="@drawable/ic_translate_black_24dp"
+        style="@style/button_style"/>
 
     <Button
         android:id="@+id/speak"
@@ -54,7 +56,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/translate"
-        app:layout_constraintTop_toBottomOf="@+id/result" />
+        app:layout_constraintTop_toBottomOf="@+id/result"
+        android:drawableLeft="@drawable/ic_mic_black_24dp"
+        style="@style/button_style"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
