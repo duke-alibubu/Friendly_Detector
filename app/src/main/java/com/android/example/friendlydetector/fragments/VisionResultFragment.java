@@ -22,6 +22,11 @@ import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguag
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
 
+import android.speech.tts.TextToSpeech;
+import java.util.Locale;
+import android.widget.Toast;
+
+import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 public class VisionResultFragment extends Fragment {
     private Bitmap image;
@@ -29,6 +34,8 @@ public class VisionResultFragment extends Fragment {
     private ImageView imageResult;
     private TextView textResult;
     private Button translateButton;
+    private Button speakButton;
+    private TextToSpeech textToSpeech;
 
     private VisionResultFragment(Bitmap image, String result) {
         this.image = image;
@@ -63,7 +70,36 @@ public class VisionResultFragment extends Fragment {
                 translateEnglishtoChinese();
             }
         });
+
+        speakButton = root.findViewById(R.id.speak);
+
+        textToSpeech  =new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.UK);
+                }
+            }
+        });
+
+        speakButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String toSpeak = textResult.getText().toString();
+                Toast.makeText(getActivity(), toSpeak,Toast.LENGTH_SHORT).show();
+                textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
+
         return root;
+    }
+
+    public void onPause(){
+        if(textToSpeech !=null){
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onPause();
     }
 
     private void translateEnglishtoChinese(){
