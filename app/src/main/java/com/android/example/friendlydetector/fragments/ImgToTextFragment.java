@@ -345,18 +345,18 @@ public class ImgToTextFragment extends Fragment {
     }
 
     private static String convertResponseToString(BatchAnnotateImagesResponse response) {
-        StringBuilder message = new StringBuilder("I found these things:\n\n");
+        StringBuilder message = new StringBuilder();
 
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
         if (labels != null) {
-            for (EntityAnnotation label : labels) {
-                message.append(String.format(Locale.US, "%.3f: %s", label.getScore(), label.getDescription()));
-                message.append("\n");
-            }
-//            message.append(String.format(Locale.US, "%s", labels.get(0).getDescription()));
-//            message.append("\n");
+//            for (EntityAnnotation label : labels) {
+//                message.append(String.format(Locale.US, "%.3f: %s", label.getScore(), label.getDescription()));
+//                message.append("\n");
+//            }
+            message.append(String.format(Locale.US, "%s", labels.get(0).getDescription()));
+            message.append("\n");
         } else {
-            message.append("nothing");
+            message.append("Nothing");
         }
 
         return message.toString();
