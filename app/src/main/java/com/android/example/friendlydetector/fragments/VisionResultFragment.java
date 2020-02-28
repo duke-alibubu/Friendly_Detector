@@ -26,8 +26,6 @@ import android.speech.tts.TextToSpeech;
 import java.util.Locale;
 import android.widget.Toast;
 
-import static com.firebase.ui.auth.AuthUI.getApplicationContext;
-
 public class VisionResultFragment extends Fragment {
     private Bitmap image;
     private String result;
@@ -36,10 +34,12 @@ public class VisionResultFragment extends Fragment {
     private Button translateButton;
     private Button speakButton;
     private TextToSpeech textToSpeech;
+    private boolean isEnglish;
 
     private VisionResultFragment(Bitmap image, String result) {
         this.image = image;
         this.result = result;
+        isEnglish = true;
     }
 
     public static VisionResultFragment newInstance(Bitmap image, String result) {
@@ -73,7 +73,7 @@ public class VisionResultFragment extends Fragment {
 
         speakButton = root.findViewById(R.id.speak);
 
-        textToSpeech  =new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
+        textToSpeech  = new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {
@@ -86,6 +86,10 @@ public class VisionResultFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String toSpeak = textResult.getText().toString();
+                if (isEnglish)
+                    textToSpeech.setLanguage(Locale.UK);
+                else
+                    textToSpeech.setLanguage(Locale.CHINESE);
                 Toast.makeText(getActivity(), toSpeak,Toast.LENGTH_SHORT).show();
                 textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
             }
@@ -131,6 +135,7 @@ public class VisionResultFragment extends Fragment {
                                     }
                                 }
                         );
+                        isEnglish = false;
                     }
                 });
     }
