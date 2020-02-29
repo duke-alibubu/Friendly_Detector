@@ -11,10 +11,10 @@ public class FirebaseUtils {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         return user.getDisplayName() != null;
     }
-    public static String getUserId(){
+    public static String getUserEmail(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user.getDisplayName() != null){
-            return user.getUid();
+            return user.getEmail();
         }
         else return null;
     }

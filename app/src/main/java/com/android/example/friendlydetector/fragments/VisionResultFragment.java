@@ -108,7 +108,8 @@ public class VisionResultFragment extends Fragment {
             }
         });
 
-        saveToCloudStorage();
+        if (FirebaseUtils.isSignedIn())
+            saveToCloudStorage();
 
         return root;
     }
@@ -170,7 +171,8 @@ public class VisionResultFragment extends Fragment {
         // Create a storage reference from our app
         StorageReference storageRef = FirebaseUtils.storage.getReference();
 
-        String randomPath = UUID.randomUUID() + ".jpg";
+        //not likely the case, but user id might be null.
+        String randomPath = FirebaseUtils.getUserEmail() + "/" + UUID.randomUUID() + ".jpg";
         StorageReference imgRef = storageRef.child(randomPath);
 
         // Get the data from an ImageView as bytes
