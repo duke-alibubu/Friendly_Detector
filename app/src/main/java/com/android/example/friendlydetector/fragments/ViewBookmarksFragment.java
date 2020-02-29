@@ -53,10 +53,7 @@ public class ViewBookmarksFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_view_bookmarks, container, false);
-
         loadImagesFromDatabase();
-        for (HistoryItemData item: historyItemDataList)
-            Log.d(LOG_TAG, item.textItem);
         return root;
     }
 
@@ -82,9 +79,16 @@ public class ViewBookmarksFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<ListResult>() {
                     @Override
                     public void onSuccess(ListResult listResult) {
-                        for (StorageReference item : listResult.getItems()) {
+                        for (final StorageReference item : listResult.getItems()) {
                             // All the items under listRef.
-                            historyItemDataList.add(getHistoryItemFromStorageItem(item));
+
+                            //creating a new thread to handle these work in background
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    historyItemDataList.add(getHistoryItemFromStorageItem(item));
+                                }
+                            }).start();
                         }
                     }
                 })
