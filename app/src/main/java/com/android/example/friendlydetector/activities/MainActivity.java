@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.fragments.MainMenuLoggedIn;
 import com.android.example.friendlydetector.fragments.VisionResultFragment;
+import com.android.example.friendlydetector.utils.FirebaseStorageUtils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         signButton = findViewById(R.id.nav_log);
-        signButton.setTitle(getText((SignInActivity.isSignedIn()) ? R.string.signout : R.string.signin));
+        signButton.setTitle(getText((FirebaseStorageUtils.isSignedIn()) ? R.string.signout : R.string.signin));
         signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.activities.SignInActivity;
+import com.android.example.friendlydetector.utils.FirebaseStorageUtils;
 
 
 /**
@@ -54,7 +55,7 @@ public class MainMenuLoggedIn extends Fragment {
         matching = view.findViewById(R.id.matching);
         viewBmks = view.findViewById(R.id.view_bmks);
 
-        if (!SignInActivity.isSignedIn()){
+        if (!FirebaseStorageUtils.isSignedIn()){
             matching.setVisibility(View.GONE);
             viewBmks.setVisibility(View.GONE);
         }
