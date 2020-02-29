@@ -3,10 +3,13 @@ package com.android.example.friendlydetector.fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +18,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.example.friendlydetector.R;
+import com.android.example.friendlydetector.utils.FirebaseStorageUtils;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
 import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import android.speech.tts.TextToSpeech;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 import android.widget.Toast;
 
@@ -35,6 +44,7 @@ public class VisionResultFragment extends Fragment {
     private Button speakButton;
     private TextToSpeech textToSpeech;
     private boolean isEnglish;
+    private static final String LOG_TAG = "Vision Result";
 
     private VisionResultFragment(Bitmap image, String result) {
         this.image = image;
@@ -95,6 +105,8 @@ public class VisionResultFragment extends Fragment {
             }
         });
 
+        saveToCloudStorage("concac.jpg");
+
         return root;
     }
 
@@ -151,5 +163,35 @@ public class VisionResultFragment extends Fragment {
         super.onDetach();
     }
 
+    private void saveToCloudStorage(String imagename){
+        // Create a storage reference from our app
+        StorageReference storageRef = FirebaseStorageUtils.storage.getReference();
 
+        StorageReference imgRef = storageRef.child(imagename);
+
+        // Get the data from an ImageView as bytes
+        imageResult.setDrawingCacheEnabled(true);
+        imageResult.buildDrawingCache();
+        Bitmap bitmap = ((BitmapDrawable) imageResult.getDrawable()).getBitmap();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = imgRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Log.e(LOG_TAG, "Upload failure");
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                Log.d(LOG_TAG, "Upload success");
+            }
+        });
+    }
 }
