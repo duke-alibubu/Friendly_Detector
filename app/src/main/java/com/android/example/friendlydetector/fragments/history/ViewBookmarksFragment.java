@@ -1,7 +1,6 @@
-package com.android.example.friendlydetector.fragments;
+package com.android.example.friendlydetector.fragments.history;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.example.friendlydetector.R;
-import com.android.example.friendlydetector.fragments.historyrecyclerview.HistoryItemData;
 import com.android.example.friendlydetector.utils.FirebaseUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +24,6 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 
 public class ViewBookmarksFragment extends Fragment {
