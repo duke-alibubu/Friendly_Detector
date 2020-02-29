@@ -49,6 +49,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-natural-language:22.0.0'
     implementation 'com.google.firebase:firebase-ml-natural-language-translate-model:20.0.7'
 
+    //dependency for firebase storage
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+
     implementation('com.google.api-client:google-api-client-android:1.23.0') {
         exclude module: 'httpclient'
         exclude group: 'com.google.guava'
