@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.example.friendlydetector.R;
-import com.android.example.friendlydetector.utils.FirebaseStorageUtils;
+import com.android.example.friendlydetector.utils.FirebaseUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
@@ -168,7 +168,7 @@ public class VisionResultFragment extends Fragment {
 
     private void saveToCloudStorage(){
         // Create a storage reference from our app
-        StorageReference storageRef = FirebaseStorageUtils.storage.getReference();
+        StorageReference storageRef = FirebaseUtils.storage.getReference();
 
         String randomPath = UUID.randomUUID() + ".jpg";
         StorageReference imgRef = storageRef.child(randomPath);

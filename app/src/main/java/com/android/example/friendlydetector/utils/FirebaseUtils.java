@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 
-public class FirebaseStorageUtils {
+public class FirebaseUtils {
     public static FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public static boolean isSignedIn() {

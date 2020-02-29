@@ -1,7 +1,6 @@
 package com.android.example.friendlydetector.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.example.friendlydetector.R;
-import com.android.example.friendlydetector.activities.SignInActivity;
-import com.android.example.friendlydetector.utils.FirebaseStorageUtils;
+import com.android.example.friendlydetector.utils.FirebaseUtils;
 
 
 /**
@@ -55,7 +53,7 @@ public class MainMenuLoggedIn extends Fragment {
         matching = view.findViewById(R.id.matching);
         viewBmks = view.findViewById(R.id.view_bmks);
 
-        if (!FirebaseStorageUtils.isSignedIn()){
+        if (!FirebaseUtils.isSignedIn()){
             matching.setVisibility(View.GONE);
             viewBmks.setVisibility(View.GONE);
         }

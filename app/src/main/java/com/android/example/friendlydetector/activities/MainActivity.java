@@ -6,17 +6,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.fragments.MainMenuLoggedIn;
 import com.android.example.friendlydetector.fragments.VisionResultFragment;
-import com.android.example.friendlydetector.utils.FirebaseStorageUtils;
+import com.android.example.friendlydetector.utils.FirebaseUtils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         signButton = findViewById(R.id.nav_log);
-        signButton.setTitle(getText((FirebaseStorageUtils.isSignedIn()) ? R.string.signout : R.string.signin));
+        signButton.setTitle(getText((FirebaseUtils.isSignedIn()) ? R.string.signout : R.string.signin));
         signButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
