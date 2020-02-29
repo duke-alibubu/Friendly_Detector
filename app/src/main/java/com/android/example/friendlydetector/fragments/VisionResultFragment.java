@@ -26,6 +26,7 @@ import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
 import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -33,6 +34,8 @@ import android.speech.tts.TextToSpeech;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
+import java.util.UUID;
+
 import android.widget.Toast;
 
 public class VisionResultFragment extends Fragment {
@@ -105,7 +108,7 @@ public class VisionResultFragment extends Fragment {
             }
         });
 
-        saveToCloudStorage("concac.jpg");
+        saveToCloudStorage();
 
         return root;
     }
@@ -163,11 +166,12 @@ public class VisionResultFragment extends Fragment {
         super.onDetach();
     }
 
-    private void saveToCloudStorage(String imagename){
+    private void saveToCloudStorage(){
         // Create a storage reference from our app
         StorageReference storageRef = FirebaseStorageUtils.storage.getReference();
 
-        StorageReference imgRef = storageRef.child(imagename);
+        String randomPath = UUID.randomUUID() + ".jpg";
+        StorageReference imgRef = storageRef.child(randomPath);
 
         // Get the data from an ImageView as bytes
         imageResult.setDrawingCacheEnabled(true);
@@ -178,7 +182,10 @@ public class VisionResultFragment extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        UploadTask uploadTask = imgRef.putBytes(data);
+        StorageMetadata metadata = new StorageMetadata.Builder()
+                                    .setCustomMetadata("text", textResult.getText().toString())
+                                    .build();
+        UploadTask uploadTask = imgRef.putBytes(data, metadata);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
