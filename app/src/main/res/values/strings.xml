@@ -7,7 +7,7 @@
     <string name="main_menu">Main Menu</string>
     <string name="img_to_text">Image to Text</string>
     <string name="translate">Translate</string>
-    <string name="view_bookmark">View Bookmarks</string>
+    <string name="view_bookmark">View History</string>
     <string name="matching_game">Matching Game</string>
     <string name="load">Load an image</string>
     <string name="camera">Take a picture</string>
