@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.example.friendlydetector.R;
+import com.android.example.friendlydetector.fragments.history.ViewBookmarksFragment;
 import com.android.example.friendlydetector.utils.FirebaseUtils;
 
 
