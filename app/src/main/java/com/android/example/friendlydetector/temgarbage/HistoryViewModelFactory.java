@@ -1,4 +1,4 @@
-package com.android.example.friendlydetector.fragments.history;
+package com.android.example.friendlydetector.temgarbage;
 
 import android.app.Application;
 

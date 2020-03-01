@@ -1,9 +1,10 @@
-package com.android.example.friendlydetector.fragments.history;
+package com.android.example.friendlydetector.temgarbage;
 
 import android.app.Application;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import com.android.example.friendlydetector.fragments.history.HistoryItemData;
 import com.android.example.friendlydetector.utils.FirebaseUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +50,7 @@ public class HistoryViewModel extends AndroidViewModel {
                                 @Override
                                 public void run() {
                                     HistoryItemData historyItemData = getHistoryItemFromStorageItem(item);
-                                    historyItemDataList.getValue().add(historyItemData);
+                                    //historyItemDataList.getValue().add(historyItemData);
                                 }
                             }).start();
                         }

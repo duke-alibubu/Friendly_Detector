@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil;
 public class HistoryItemDiffUtil extends DiffUtil.ItemCallback<HistoryItemData> {
     @Override
     public boolean areItemsTheSame(@NonNull HistoryItemData oldItem, @NonNull HistoryItemData newItem) {
-        return false;
+        return oldItem == newItem;
     }
 
     @Override
     public boolean areContentsTheSame(@NonNull HistoryItemData oldItem, @NonNull HistoryItemData newItem) {
-        return false;
+        return oldItem == newItem;
     }
 }

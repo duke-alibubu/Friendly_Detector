@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,14 +34,13 @@ import java.util.List;
 public class ViewBookmarksFragment extends Fragment {
     private static final String LOG_TAG = "History";
     private static final long ONE_MEGABYTE = 1024 * 1024;
-    //private List<HistoryItemData> historyItemDataList = new ArrayList<>();
+    private List<HistoryItemData> historyItemDataList = new ArrayList<>();
 
-    private MutableLiveData<List<HistoryItemData>> historyItemDataList = new MutableLiveData<>();
+    //private MutableLiveData<List<HistoryItemData>> historyItemDataList = new MutableLiveData<>();
     private FragmentViewBookmarksBinding binding;
 
     private ViewBookmarksFragment() {
-        historyItemDataList.setValue(new ArrayList<HistoryItemData>());
-
+        historyItemDataList = new ArrayList<>();
     }
 
     public static ViewBookmarksFragment newInstance() {
@@ -62,13 +62,22 @@ public class ViewBookmarksFragment extends Fragment {
         loadImagesFromDatabase();
         final HistoryItemAdapter adapter = new HistoryItemAdapter();
         binding.history.setAdapter(adapter);
-        historyItemDataList.observe(getViewLifecycleOwner(), new Observer<List<HistoryItemData>>() {
-            @Override
-            public void onChanged(List<HistoryItemData> historyItemData) {
-                adapter.submitList(historyItemData);
-                Log.d(LOG_TAG, "History Data Changed");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // yourMethod();
+                adapter.submitList(historyItemDataList);
             }
-        });
+        }, 3000);
+
+//        historyItemDataList.observe(getViewLifecycleOwner(), new Observer<List<HistoryItemData>>() {
+//
+//            @Override
+//            public void onChanged(List<HistoryItemData> historyItemData) {
+//                adapter.submitList(historyItemData);
+//                Log.d(LOG_TAG, "History Data Changed");
+//            }
+//        });
 
         return binding.getRoot();
     }
@@ -102,7 +111,8 @@ public class ViewBookmarksFragment extends Fragment {
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    historyItemDataList.getValue().add(getHistoryItemFromStorageItem(item));
+                                    historyItemDataList.add(getHistoryItemFromStorageItem(item));
+                                    //adapter.submitList(historyItemDataList.getValue());
                                 }
                             }).start();
                         }
