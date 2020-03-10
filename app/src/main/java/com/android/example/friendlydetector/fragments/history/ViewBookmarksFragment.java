@@ -68,7 +68,7 @@ public class ViewBookmarksFragment extends Fragment {
                 // yourMethod();
                 adapter.submitList(historyItemDataList);
             }
-        }, 3000);
+        }, 5000);
 
 //        historyItemDataList.observe(getViewLifecycleOwner(), new Observer<List<HistoryItemData>>() {
 //
