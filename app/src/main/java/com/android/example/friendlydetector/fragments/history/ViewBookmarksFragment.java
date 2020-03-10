@@ -7,8 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import android.os.Handler;
 import android.util.Log;
@@ -34,7 +32,7 @@ import java.util.List;
 public class ViewBookmarksFragment extends Fragment {
     private static final String LOG_TAG = "History";
     private static final long ONE_MEGABYTE = 1024 * 1024;
-    private List<HistoryItemData> historyItemDataList = new ArrayList<>();
+    private List<HistoryItemData> historyItemDataList;
 
     //private MutableLiveData<List<HistoryItemData>> historyItemDataList = new MutableLiveData<>();
     private FragmentViewBookmarksBinding binding;
