@@ -16,6 +16,7 @@
     <string name="translated_lang">Chinese</string>
     <string name="translation">Translation</string>
     <string name="please_start">Please select a feature to start with</string>
+    <string name="what_is">What is this?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
