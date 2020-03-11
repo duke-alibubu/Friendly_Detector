@@ -7,10 +7,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.fragments.history.HistoryItemData;
@@ -32,7 +36,11 @@ public class MatchingGameFragment extends Fragment {
     private static final String LOG_TAG = "MatchingGame";
     private static final long ONE_MEGABYTE = 1024 * 1024;
     private List<HistoryItemData> gameData;
-
+    private ImageView imageToShow;
+    private Button option1;
+    private Button option2;
+    private Button option3;
+    private Button option4;
     private MatchingGameFragment() {
         gameData = new ArrayList<>();
     }
@@ -52,8 +60,24 @@ public class MatchingGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_matching_game, container, false);
+        imageToShow = root.findViewById(R.id.img_source);
+        option1 = root.findViewById(R.id.option_1);
+        option2 = root.findViewById(R.id.option_2);
+        option3 = root.findViewById(R.id.option_3);
+        option4 = root.findViewById(R.id.option_4);
         loadImagesFromDatabase();
-        return inflater.inflate(R.layout.fragment_matching_game, container, false);
+        Handler handler = new Handler();
+
+        //wait to make sure things are loaded
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // yourMethod();
+                imageToShow.setImageBitmap(gameData.get(0).imageItem);
+                option1.setText(gameData.get(0).textItem);
+            }
+        }, 4000);
+        return root;
     }
 
 
@@ -148,7 +172,7 @@ public class MatchingGameFragment extends Fragment {
     private List<Integer> randomIndex(int total){
         //randomize a list of indices between 0 and total - 1 . If total < 4, just take them all
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i=1; i<total; i++) {
+        for (int i=0; i<total; i++) {
             list.add(i);
         }
         if (total <= 4){
@@ -157,7 +181,7 @@ public class MatchingGameFragment extends Fragment {
         else {
             Collections.shuffle(list);
             ArrayList<Integer> ans = new ArrayList<>(4);
-            for (int i=0; i<3; i++) {
+            for (int i=0; i<4; i++) {
                 ans.add(list.get(i));
 
             }
