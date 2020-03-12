@@ -123,7 +123,19 @@ public class MatchingGameFragment extends Fragment {
             public void run() {
                 // yourMethod();
                 imageToShow.setImageBitmap(gameData.get(0).imageItem);
-                option1.setText(gameData.get(0).textItem);
+                List<String> wordsToUse = new ArrayList<>(4);
+                int randomIndex1 = (int)(Math.random() * objectList.length);
+                int randomIndex2 = (int)(Math.random() * objectList.length);
+                int randomIndex3 = (int)(Math.random() * objectList.length);
+                wordsToUse.add(gameData.get(0).textItem);
+                wordsToUse.add(objectList[randomIndex1]);
+                wordsToUse.add(objectList[randomIndex2]);
+                wordsToUse.add(objectList[randomIndex3]);
+                Collections.shuffle(wordsToUse);
+                option1.setText(wordsToUse.get(0));
+                option2.setText(wordsToUse.get(1));
+                option3.setText(wordsToUse.get(2));
+                option4.setText(wordsToUse.get(3));
             }
         }, 4000);
         return root;
