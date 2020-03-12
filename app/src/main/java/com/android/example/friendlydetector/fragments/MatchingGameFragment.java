@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.fragments.history.HistoryItemData;
@@ -41,8 +40,58 @@ public class MatchingGameFragment extends Fragment {
     private Button option2;
     private Button option3;
     private Button option4;
+    private String[] objectList;
+
     private MatchingGameFragment() {
         gameData = new ArrayList<>();
+        objectList = new String[]{"screw",
+                "sailboat",
+                "fork",
+                "bed",
+                "bracelet",
+                "USB drive", "house",
+                "paper",
+                "hair brush",
+                "table",
+                "key chain",
+                "chalk",
+                "camera",
+                "headphones", "glasses", "computer", "sofa", "puddle", "deodorant", "blanket",
+                "beef",
+                "hanger",
+                "bow",
+                "sponge",
+                "apple",
+                "greeting card",
+                "mouse pad",
+                "tooth picks",
+                "shawl",
+                "leg warmers",
+                "doll",
+                "model", "car",
+                "desk",
+                "washing machine",
+                "cork",
+                "tree", "book",
+                "mirror",
+                "picture frame",
+                "sand paper",
+                "sidewalk",
+                "toilet",
+                "thermometer",
+                "controller",
+                "soap",
+                "rusty nail",
+                "Skirt",
+                "Overalls",
+                "Thong",
+                "Shawl",
+                "Nightgown", "Lion", "Dragon", "Pool", "Poppy",
+                "Sweet Pea",
+                "Pinks",
+                "Broom",
+                "Bougainvillea",
+                "Lavender"};
     }
 
     public static MatchingGameFragment newInstance() {
@@ -91,7 +140,7 @@ public class MatchingGameFragment extends Fragment {
         super.onDetach();
     }
 
-    private void loadImagesFromDatabase(){
+    private void loadImagesFromDatabase() {
         String userFolder = FirebaseUtils.getUserEmail();
 
         Log.d(LOG_TAG, userFolder);
@@ -104,7 +153,7 @@ public class MatchingGameFragment extends Fragment {
                     public void onSuccess(ListResult listResult) {
                         List<Integer> playIndices = randomIndex(listResult.getItems().size());
                         Log.d(LOG_TAG, playIndices.toString());
-                        for (int i: playIndices) {
+                        for (int i : playIndices) {
                             // All the items under listRef.
 
                             //creating a new thread to handle these work in background
@@ -128,7 +177,7 @@ public class MatchingGameFragment extends Fragment {
                 });
     }
 
-    private HistoryItemData getMatchingItemFromStorageItem(StorageReference item){
+    private HistoryItemData getMatchingItemFromStorageItem(StorageReference item) {
         final HistoryItemData res = new HistoryItemData();
         Task textTask = item.getMetadata();
         textTask.addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
@@ -163,25 +212,24 @@ public class MatchingGameFragment extends Fragment {
             Tasks.await(imageTask);
             return res;
 
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.d(LOG_TAG, e.getClass().toString() + e.getMessage());
             return res;
         }
     }
 
-    private List<Integer> randomIndex(int total){
+    private List<Integer> randomIndex(int total) {
         //randomize a list of indices between 0 and total - 1 . If total < 4, just take them all
         ArrayList<Integer> list = new ArrayList<>();
-        for (int i=0; i<total; i++) {
+        for (int i = 0; i < total; i++) {
             list.add(i);
         }
-        if (total <= 4){
+        if (total <= 4) {
             return list;
-        }
-        else {
+        } else {
             Collections.shuffle(list);
             ArrayList<Integer> ans = new ArrayList<>(4);
-            for (int i=0; i<4; i++) {
+            for (int i = 0; i < 4; i++) {
                 ans.add(list.get(i));
 
             }
