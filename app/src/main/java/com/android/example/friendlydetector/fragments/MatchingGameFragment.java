@@ -1,6 +1,7 @@
 package com.android.example.friendlydetector.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -266,7 +268,7 @@ public class MatchingGameFragment extends Fragment {
 
     private void loadNewGame(){
         if (gameData != null && indexOfWord < gameData.size()){
-            imageToShow.setImageBitmap(gameData.get(indexOfWord).imageItem);
+            imageToShow.setImageBitmap(scaleBitmapToHalfScreenHeight(gameData.get(indexOfWord).imageItem));
             List<String> wordsToUse = new ArrayList<>(4);
             int randomIndex1 = (int)(Math.random() * objectList.length);
             int randomIndex2 = (int)(Math.random() * objectList.length);
@@ -296,5 +298,16 @@ public class MatchingGameFragment extends Fragment {
         screenText.setText(R.string.congrats);
     }
 
+    private Bitmap scaleBitmapToHalfScreenHeight(Bitmap input){
+        //get screen width
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int allowedHeight = displayMetrics.heightPixels / 2;
+
+        //scale the image size down
+        int width = allowedHeight * input.getWidth() / input.getHeight();
+
+        return Bitmap.createScaledBitmap(input, width, allowedHeight, true);
+    }
 
 }
