@@ -41,7 +41,8 @@
         app:layout_constraintEnd_toStartOf="@+id/option_2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_source" />
+        app:layout_constraintTop_toBottomOf="@+id/img_source"
+        style="@style/button_style"/>
 
     <Button
         android:id="@+id/option_2"
@@ -52,7 +53,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/option_1"
-        app:layout_constraintTop_toBottomOf="@+id/img_source" />
+        app:layout_constraintTop_toBottomOf="@+id/img_source"
+        style="@style/button_style"/>
 
     <Button
         android:id="@+id/option_3"
@@ -64,7 +66,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_source"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintVertical_bias="0.75"
+        style="@style/button_style"/>
 
     <Button
         android:id="@+id/option_4"
@@ -76,5 +79,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/option_3"
         app:layout_constraintTop_toBottomOf="@+id/img_source"
-        app:layout_constraintVertical_bias="0.75"/>
+        app:layout_constraintVertical_bias="0.75"
+        style="@style/button_style" />
 </androidx.constraintlayout.widget.ConstraintLayout>
