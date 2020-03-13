@@ -354,7 +354,6 @@ public class ImgToTextFragment extends Fragment {
 //                message.append("\n");
 //            }
             message.append(String.format(Locale.US, "%s", labels.get(0).getDescription()));
-            message.append("\n");
         } else {
             message.append("Nothing");
         }
