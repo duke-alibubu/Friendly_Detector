@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.example.friendlydetector.R;
@@ -44,6 +45,7 @@ public class MatchingGameFragment extends Fragment {
     private Button option2;
     private Button option3;
     private Button option4;
+    private TextView screenText;
     private String[] objectList;
 
     private MatchingGameFragment() {
@@ -120,6 +122,7 @@ public class MatchingGameFragment extends Fragment {
         option2 = root.findViewById(R.id.option_2);
         option3 = root.findViewById(R.id.option_3);
         option4 = root.findViewById(R.id.option_4);
+        screenText = root.findViewById(R.id.question);
         loadImagesFromDatabase();
 
         View.OnClickListener optionClickListener = new View.OnClickListener() {
@@ -285,7 +288,12 @@ public class MatchingGameFragment extends Fragment {
     }
 
     private void endGame(){
-        Toast.makeText(getContext(), "Good game, well played!", Toast.LENGTH_SHORT).show();
+        option1.setVisibility(View.GONE);
+        option2.setVisibility(View.GONE);
+        option3.setVisibility(View.GONE);
+        option4.setVisibility(View.GONE);
+        imageToShow.setImageResource(R.drawable.gamefinish);
+        screenText.setText(R.string.congrats);
     }
 
 
