@@ -37,6 +37,7 @@ public class MatchingGameFragment extends Fragment {
     private static final long ONE_MEGABYTE = 1024 * 1024;
     private String answer;
     private int indexOfWord;
+    private Handler handler;
     private List<HistoryItemData> gameData;
     private ImageView imageToShow;
     private Button option1;
@@ -95,6 +96,7 @@ public class MatchingGameFragment extends Fragment {
                 "Broom",
                 "Bougainvillea",
                 "Lavender"};
+        handler = new Handler();
     }
 
     public static MatchingGameFragment newInstance() {
@@ -119,14 +121,19 @@ public class MatchingGameFragment extends Fragment {
         option3 = root.findViewById(R.id.option_3);
         option4 = root.findViewById(R.id.option_4);
         loadImagesFromDatabase();
-        Handler handler = new Handler();
 
         View.OnClickListener optionClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View button) {
                 if (answer != null && ((Button)button).getText().toString().equals(answer)){
                     //correct answer! Do the recreate word
-                    Toast.makeText(getContext(), "Ghe!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Well Done!", Toast.LENGTH_SHORT).show();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadNewGame();
+                        }
+                    }, 1000);
                 }
             }
         };
@@ -140,21 +147,7 @@ public class MatchingGameFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             public void run() {
                 // yourMethod();
-                imageToShow.setImageBitmap(gameData.get(0).imageItem);
-                List<String> wordsToUse = new ArrayList<>(4);
-                int randomIndex1 = (int)(Math.random() * objectList.length);
-                int randomIndex2 = (int)(Math.random() * objectList.length);
-                int randomIndex3 = (int)(Math.random() * objectList.length);
-                answer = gameData.get(0).textItem;
-                wordsToUse.add(answer);
-                wordsToUse.add(objectList[randomIndex1]);
-                wordsToUse.add(objectList[randomIndex2]);
-                wordsToUse.add(objectList[randomIndex3]);
-                Collections.shuffle(wordsToUse);
-                option1.setText(wordsToUse.get(0));
-                option2.setText(wordsToUse.get(1));
-                option3.setText(wordsToUse.get(2));
-                option4.setText(wordsToUse.get(3));
+                loadNewGame();
             }
         }, 4000);
         return root;
@@ -267,5 +260,33 @@ public class MatchingGameFragment extends Fragment {
             return ans;
         }
     }
+
+    private void loadNewGame(){
+        if (gameData != null && indexOfWord < gameData.size()){
+            imageToShow.setImageBitmap(gameData.get(indexOfWord).imageItem);
+            List<String> wordsToUse = new ArrayList<>(4);
+            int randomIndex1 = (int)(Math.random() * objectList.length);
+            int randomIndex2 = (int)(Math.random() * objectList.length);
+            int randomIndex3 = (int)(Math.random() * objectList.length);
+            answer = gameData.get(indexOfWord).textItem;
+            wordsToUse.add(answer);
+            wordsToUse.add(objectList[randomIndex1]);
+            wordsToUse.add(objectList[randomIndex2]);
+            wordsToUse.add(objectList[randomIndex3]);
+            Collections.shuffle(wordsToUse);
+            option1.setText(wordsToUse.get(0));
+            option2.setText(wordsToUse.get(1));
+            option3.setText(wordsToUse.get(2));
+            option4.setText(wordsToUse.get(3));
+            indexOfWord++;
+        }
+        else if (indexOfWord == gameData.size())
+            endGame();
+    }
+
+    private void endGame(){
+        Toast.makeText(getContext(), "Good game, well played!", Toast.LENGTH_SHORT).show();
+    }
+
 
 }
