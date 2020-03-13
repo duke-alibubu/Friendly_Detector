@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.fragments.history.HistoryItemData;
@@ -34,6 +35,8 @@ import java.util.List;
 public class MatchingGameFragment extends Fragment {
     private static final String LOG_TAG = "MatchingGame";
     private static final long ONE_MEGABYTE = 1024 * 1024;
+    private String answer;
+    private int indexOfWord;
     private List<HistoryItemData> gameData;
     private ImageView imageToShow;
     private Button option1;
@@ -118,6 +121,21 @@ public class MatchingGameFragment extends Fragment {
         loadImagesFromDatabase();
         Handler handler = new Handler();
 
+        View.OnClickListener optionClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View button) {
+                if (answer != null && ((Button)button).getText().toString().equals(answer)){
+                    //correct answer! Do the recreate word
+                    Toast.makeText(getContext(), "Ghe!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        option1.setOnClickListener(optionClickListener);
+        option2.setOnClickListener(optionClickListener);
+        option3.setOnClickListener(optionClickListener);
+        option4.setOnClickListener(optionClickListener);
+
         //wait to make sure things are loaded
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -127,7 +145,8 @@ public class MatchingGameFragment extends Fragment {
                 int randomIndex1 = (int)(Math.random() * objectList.length);
                 int randomIndex2 = (int)(Math.random() * objectList.length);
                 int randomIndex3 = (int)(Math.random() * objectList.length);
-                wordsToUse.add(gameData.get(0).textItem);
+                answer = gameData.get(0).textItem;
+                wordsToUse.add(answer);
                 wordsToUse.add(objectList[randomIndex1]);
                 wordsToUse.add(objectList[randomIndex2]);
                 wordsToUse.add(objectList[randomIndex3]);
@@ -248,4 +267,5 @@ public class MatchingGameFragment extends Fragment {
             return ans;
         }
     }
+
 }
