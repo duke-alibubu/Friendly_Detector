@@ -76,6 +76,7 @@ public class ImgToTextFragment extends Fragment {
     private static final int MAX_LABEL_RESULTS = 10;
     private static final String TAG = "Vision_api";
 
+    private View root;
     private ImgToTextFragment() {
 
     }
@@ -95,9 +96,9 @@ public class ImgToTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_img_to_text, container, false);
-        loadButton = view.findViewById(R.id.load);
-        cameraButton = view.findViewById(R.id.camera);
+        root = inflater.inflate(R.layout.fragment_img_to_text, container, false);
+        loadButton = root.findViewById(R.id.load);
+        cameraButton = root.findViewById(R.id.camera);
 
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +114,7 @@ public class ImgToTextFragment extends Fragment {
             }
         });
 
-        return view;
+        return root;
     }
 
     private void loadImage(){
@@ -178,6 +179,7 @@ public class ImgToTextFragment extends Fragment {
                     passedImage = output;
                     mainActivityContext = (MainActivity)getActivity();
                     callCloudVision(output);
+                    setLoadingScreen();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -188,6 +190,7 @@ public class ImgToTextFragment extends Fragment {
                     passedImage = output;
                     mainActivityContext = (MainActivity)getActivity();
                     callCloudVision(output);
+                    setLoadingScreen();
                 }
                 catch (Exception e){
                     e.printStackTrace();
@@ -196,6 +199,11 @@ public class ImgToTextFragment extends Fragment {
         }
     }
 
+    private void setLoadingScreen(){
+        loadButton.setVisibility(View.GONE);
+        cameraButton.setVisibility(View.GONE);
+        root.findViewById(R.id.progressBar_cyclic).setVisibility(View.VISIBLE);
+    }
     private Bitmap scaleBitmapToScreenSize(Bitmap input){
         //get screen width
         DisplayMetrics displayMetrics = new DisplayMetrics();
