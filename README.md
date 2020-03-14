@@ -2,5 +2,6 @@
 
 ## Temporary Goals:
 - What's left:
-  + Add loading in waiting for datas (View History, ImgToText -> Vision Result. Matching Game)
   + Improve UI
+  + Add login by phone, if possible
+  + Play again, if possible.
