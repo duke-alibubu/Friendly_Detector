@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.android.example.friendlydetector.R;
 import com.android.example.friendlydetector.databinding.FragmentViewBookmarksBinding;
@@ -65,6 +66,8 @@ public class ViewBookmarksFragment extends Fragment {
             public void run() {
                 // yourMethod();
                 adapter.submitList(historyItemDataList);
+                ProgressBar progressBar = binding.progressBarCyclic;
+                progressBar.setVisibility(View.GONE);
             }
         }, 5000);
 
