@@ -16,15 +16,13 @@
 
         <ImageView
             android:id="@+id/image_to_process"
-            android:layout_margin="10dp"
             android:layout_width="@dimen/list_img_height"
             android:layout_height="@dimen/list_img_height"
-            app:layout_constraintEnd_toStartOf="@+id/text_to_process"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setBitmapSrc="@{historyItem}"
-            />
+            app:setBitmapSrc="@{historyItem}" />
 
         <TextView
             android:id="@+id/text_to_process"
@@ -32,10 +30,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@{historyItem.textItem}"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/image_to_process"
+            app:layout_constraintHorizontal_bias="0.64"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

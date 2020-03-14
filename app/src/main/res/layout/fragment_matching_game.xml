@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_thin"
         android:text="@string/what_is"
-        android:textColor="@color/colorAccent"
+
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
