@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        tools:src="@tools:sample/avatars"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/question"
@@ -29,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_source"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.25"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/option_1"
@@ -41,7 +43,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_source"
-        style="@style/option_style"/>
+        style="@style/option_style"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/option_2"
@@ -53,7 +56,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/option_1"
         app:layout_constraintTop_toBottomOf="@+id/img_source"
-        style="@style/option_style"/>
+        style="@style/option_style"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/option_3"
@@ -66,7 +70,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_source"
         app:layout_constraintVertical_bias="0.75"
-        style="@style/option_style"/>
+        style="@style/option_style"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/option_4"
@@ -79,7 +84,8 @@
         app:layout_constraintStart_toEndOf="@+id/option_3"
         app:layout_constraintTop_toBottomOf="@+id/img_source"
         app:layout_constraintVertical_bias="0.75"
-        style="@style/option_style" />
+        style="@style/option_style"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/progressBar_cyclic"
