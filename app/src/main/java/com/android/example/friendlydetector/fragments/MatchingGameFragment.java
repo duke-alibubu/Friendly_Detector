@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -118,7 +119,7 @@ public class MatchingGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_matching_game, container, false);
+        final View root = inflater.inflate(R.layout.fragment_matching_game, container, false);
         imageToShow = root.findViewById(R.id.img_source);
         option1 = root.findViewById(R.id.option_1);
         option2 = root.findViewById(R.id.option_2);
@@ -153,8 +154,11 @@ public class MatchingGameFragment extends Fragment {
             public void run() {
                 // yourMethod();
                 loadNewGame();
+                ProgressBar progressBar = root.findViewById(R.id.progressBar_cyclic);
+                progressBar.setVisibility(View.GONE);
             }
         }, 4000);
+
         return root;
     }
 
