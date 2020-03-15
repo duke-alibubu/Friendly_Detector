@@ -23,12 +23,12 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="option_style">
-        <item name="android:background">#FFFFFF</item>
-        <item name="android:fontFamily">@font/roboto_thin</item>
+        <item name="android:background">@drawable/textview_border</item>
         <item name="android:drawablePadding">@dimen/drawable_button_padding</item>
         <item name="android:drawableTint">#FFFFFF</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:padding">5dp</item>
         <item name="android:textStyle">bold</item>
 
     </style>
