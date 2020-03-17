@@ -171,7 +171,7 @@ public class MatchingGameFragment extends Fragment {
                 }
 
             }
-        }, 4000);
+        }, 5000);
 
         return root;
     }
