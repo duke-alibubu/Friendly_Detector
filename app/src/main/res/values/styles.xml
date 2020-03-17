@@ -13,7 +13,8 @@
     </style>
 
     <style name="button_style">
-        <item name="android:background">@drawable/button_background</item>
+<!--        <item name="android:background">@drawable/button_background</item>-->
+        <item name="android:background">@drawable/button_background_red</item>
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:drawablePadding">@dimen/drawable_button_padding</item>
