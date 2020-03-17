@@ -29,6 +29,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
+        android:background="@drawable/button_background_yellow"
         android:id="@+id/translate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
