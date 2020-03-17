@@ -13,7 +13,7 @@
         style="@style/button_style"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_image_black_24dp"
+        android:drawableStart="@drawable/ic_image_black_24dp"
         android:text="@string/img_to_text"
         app:layout_constraintBottom_toTopOf="@+id/trans"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +32,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_to_text"
-        android:drawableLeft="@drawable/ic_translate_black_24dp"
+        android:drawableStart="@drawable/ic_translate_black_24dp"
         style="@style/button_style"/>
 
     <Button
@@ -46,7 +46,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trans"
-        android:drawableLeft="@drawable/ic_history_black_24dp"
+        android:drawableStart="@drawable/ic_history_black_24dp"
         style="@style/button_style"/>
 
     <Button
@@ -60,7 +60,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_bmks"
-        android:drawableLeft="@drawable/ic_videogame_asset_black_24dp"
+        android:drawableStart="@drawable/ic_videogame_asset_black_24dp"
         style="@style/button_style"/>
 
     <ImageView
