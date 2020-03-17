@@ -17,6 +17,7 @@
     <string name="translation">Translation</string>
     <string name="please_start">Please select a feature to start with</string>
     <string name="what_is">WHAT IS THIS?</string>
+    <string name="matching_game_loading_error">Sorry, a network issue happened or no data is available right now. Please try again!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

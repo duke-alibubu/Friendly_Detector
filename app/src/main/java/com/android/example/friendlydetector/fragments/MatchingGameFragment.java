@@ -156,12 +156,19 @@ public class MatchingGameFragment extends Fragment {
                 loadNewGame();
                 ProgressBar progressBar = root.findViewById(R.id.progressBar_cyclic);
                 progressBar.setVisibility(View.GONE);
-                imageToShow.setVisibility(View.VISIBLE);
-                option1.setVisibility(View.VISIBLE);
-                option2.setVisibility(View.VISIBLE);
-                option3.setVisibility(View.VISIBLE);
-                option4.setVisibility(View.VISIBLE);
                 screenText.setVisibility(View.VISIBLE);
+                if (gameData.size() == 0){
+                    imageToShow.setVisibility(View.VISIBLE);
+                    imageToShow.setImageResource(R.drawable.error);
+                    screenText.setText(R.string.matching_game_loading_error);
+                }
+                else {
+                    imageToShow.setVisibility(View.VISIBLE);
+                    option1.setVisibility(View.VISIBLE);
+                    option2.setVisibility(View.VISIBLE);
+                    option3.setVisibility(View.VISIBLE);
+                    option4.setVisibility(View.VISIBLE);
+                }
 
             }
         }, 4000);
