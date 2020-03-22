@@ -131,16 +131,25 @@ public class MatchingGameFragment extends Fragment {
         View.OnClickListener optionClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View button) {
-                if (answer != null && ((Button)button).getText().toString().equals(answer)){
-                    //correct answer! Do the recreate word
-                    Toast.makeText(getContext(), "Well Done!", Toast.LENGTH_SHORT).show();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadNewGame();
-                        }
-                    }, 1000);
+                if (answer != null){
+                    if (((Button)button).getText().toString().equals(answer)){
+                        //correct answer! Do the recreate word
+                        button.setBackgroundResource(R.drawable.roundedbtn_correctans);
+                        Toast.makeText(getContext(), "Well Done!", Toast.LENGTH_SHORT).show();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadNewGame();
+                            }
+                        }, 1000);
+                    }
+                    else {
+                        //wrong answer!
+                        button.setBackgroundResource(R.drawable.roundedbtn_wrongans);
+                        Toast.makeText(getContext(), "Oops, try again...", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         };
 
@@ -297,10 +306,17 @@ public class MatchingGameFragment extends Fragment {
             wordsToUse.add(objectList[randomIndex2]);
             wordsToUse.add(objectList[randomIndex3]);
             Collections.shuffle(wordsToUse);
+
             option1.setText(wordsToUse.get(0));
             option2.setText(wordsToUse.get(1));
             option3.setText(wordsToUse.get(2));
             option4.setText(wordsToUse.get(3));
+
+            option1.setBackgroundResource(R.drawable.roundedbtn);
+            option2.setBackgroundResource(R.drawable.roundedbtn);
+            option3.setBackgroundResource(R.drawable.roundedbtn);
+            option4.setBackgroundResource(R.drawable.roundedbtn);
+
             indexOfWord++;
         }
         else if (indexOfWord == gameData.size())
