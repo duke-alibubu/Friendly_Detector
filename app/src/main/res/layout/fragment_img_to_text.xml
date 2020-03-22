@@ -7,7 +7,7 @@
     tools:context=".fragments.ImgToTextFragment">
 
     <Button
-        android:background="@drawable/button_background_blue"
+        android:background="@color/buttonBlue"
         android:id="@+id/camera"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         style="@style/button_style"/>
 
     <Button
-        android:background="@drawable/button_background_green"
+        android:background="@color/buttonGreen"
         android:id="@+id/load"
         android:layout_width="200dp"
         android:layout_height="wrap_content"

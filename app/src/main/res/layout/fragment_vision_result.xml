@@ -27,7 +27,7 @@
         android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Con Cac"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/translate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/image_taken" />
 
     <Button
-        android:background="@drawable/button_background_yellow"
+        android:background="@color/buttonYellow"
         android:id="@+id/translate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         style="@style/button_style"/>
 
     <Button
-        android:background="@drawable/button_background_blue"
+        android:background="@color/buttonBlue"
         android:id="@+id/speak"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
