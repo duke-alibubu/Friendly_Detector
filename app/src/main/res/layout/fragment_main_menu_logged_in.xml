@@ -8,7 +8,7 @@
 
 
     <Button
-        android:background="@color/buttonRed"
+        android:background="@drawable/roundedbtn_red"
         android:id="@+id/img_to_text"
         style="@style/button_style"
         android:layout_width="200dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/slogan_inv" />
 
     <Button
-        android:background="@color/buttonYellow"
+        android:background="@drawable/roundedbtn_yellow"
         android:id="@+id/trans"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         style="@style/button_style"/>
 
     <Button
-        android:background="@color/buttonGreen"
+        android:background="@drawable/roundedbtn_green"
         android:id="@+id/view_bmks"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         style="@style/button_style"/>
 
     <Button
-        android:background="@color/buttonBlue"
+        android:background="@drawable/roundedbtn_blue"
         android:id="@+id/matching"
         android:layout_width="200dp"
         android:layout_height="wrap_content"

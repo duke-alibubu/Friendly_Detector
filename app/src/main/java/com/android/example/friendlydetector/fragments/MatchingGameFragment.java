@@ -134,7 +134,7 @@ public class MatchingGameFragment extends Fragment {
                 if (answer != null){
                     if (((Button)button).getText().toString().equals(answer)){
                         //correct answer! Do the recreate word
-                        button.setBackgroundResource(R.drawable.roundedbtn_correctans);
+                        button.setBackgroundResource(R.drawable.roundedbtn_green);
                         Toast.makeText(getContext(), "Well Done!", Toast.LENGTH_SHORT).show();
                         handler.postDelayed(new Runnable() {
                             @Override
@@ -145,7 +145,7 @@ public class MatchingGameFragment extends Fragment {
                     }
                     else {
                         //wrong answer!
-                        button.setBackgroundResource(R.drawable.roundedbtn_wrongans);
+                        button.setBackgroundResource(R.drawable.roundedbtn_red);
                         Toast.makeText(getContext(), "Oops, try again...", Toast.LENGTH_SHORT).show();
                     }
                 }
